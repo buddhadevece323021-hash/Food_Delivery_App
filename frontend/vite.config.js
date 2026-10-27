@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   server: {
+    allowedHosts: ['generally-startup-theorem-zum.trycloudflare.com'],
     watch: {
       usePolling: true,       // ✅ Forces Vite to actively check for file changes
       interval: 100,          // Check every 100 ms
