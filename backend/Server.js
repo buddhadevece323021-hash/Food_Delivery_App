@@ -17,7 +17,7 @@ import { fileURLToPath } from "url";
 configDotenv();
 
 // frontend URL...
-const allowedOrigins = ['http://localhost:5173'] 
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174']
 
 // app configaretion...
 const app = express();

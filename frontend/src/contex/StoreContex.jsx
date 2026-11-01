@@ -12,7 +12,7 @@ const StoreContexProvider = (props) => {
     // { itemId: quantity }
     const [cartItems, setCartItems] = useState({})
     // Backend API URL
-    const url = "http://localhost:7000";
+    const url = "http://localhost:3001";
     // JWT token for authentication
     //const [token, setToken] = useState("");
     // Search state

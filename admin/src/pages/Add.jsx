@@ -146,6 +146,10 @@ const Add = ({ url }) => {
               <option value="Pasta">Pasta</option>
               <option value="Noodles">Noodles</option>
               <option value="Biryani">Biryani</option>
+              <option value="Soft Drinks">Soft Drinks</option>
+              <option value="Mocktails">Mocktails</option>
+              <option value="Shakes">Shakes</option>
+              <option value="Juices">Juices</option>
             </select>
           </div>
 

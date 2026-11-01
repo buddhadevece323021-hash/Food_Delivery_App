@@ -7,8 +7,11 @@ import React, {
 import axios from "axios";
 import { StoreContex } from "../contex/StoreContex";
 
+
 const AiChat = () => {
   const { url, addToCart } = useContext(StoreContex);
+
+
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -139,18 +142,27 @@ const AiChat = () => {
     }
   };
 
+ 
   return (
     <>
       {/* Chat Toggle Button */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-7 right-6 z-50 flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_0_25px_rgba(168,85,247,0.5)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(168,85,247,0.7)]"
-      >
-        <span className="animate-pulse text-lg">
-          {open ? "✕" : "✨"}
-        </span>
-        {open ? "Close AI" : "Ask AI"}
-      </button>
+   <button
+  onClick={() => setOpen(!open)}
+  className="fixed bottom-7 right-6 z-50 transition-all duration-300 hover:scale-110"
+>
+  {open ? (
+    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 text-white text-xl">
+      ✕
+    </div>
+  ) : (
+    <div className="flex h-32 w-32 items-center justify-center rounded-full  text-white text-xl"><img
+      src="/chatbot.gif"
+      alt="Chatbot"
+      className=" rounded-full object-cover"
+    /></div>
+    
+  )}
+</button>
 
       {open && (
         <div className="fixed bottom-24 right-5 z-50 flex h-[min(580px,calc(100vh-130px))] w-[min(380px,calc(100vw-40px))] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#181818] shadow-2xl">

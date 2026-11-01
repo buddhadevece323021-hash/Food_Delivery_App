@@ -2,6 +2,7 @@ import { userModel } from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from "validator";
+import crypto from "crypto";
 import { transporter } from "../config/nodemailer.js";
 
 
@@ -60,7 +61,7 @@ export const register = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: email,
             subject: 'Welcome to our Website  ',
-            text: `Welcome to Tomato! . Your account has been created with email id: ${email}`
+            text: `Welcome to FootBite..! . Your account has been created with email id: ${email}`
         }
         transporter.sendMail(mailoption)
 
@@ -100,7 +101,7 @@ export const login = async (req, res) => {
             maxAge: 1 * 24 * 60 * 60 * 1000
         });
 
-        return res.json({ success: true, message: "Logged in successfully" });
+        return res.json({ success: true, message: "Logged in successfully", role: user.role });
 
 
     } catch (error) {
@@ -282,3 +283,25 @@ export const resetPassword = async (req, res) => {
 
     }
 }
+
+// ---------- admin login (credentials come from .env) ----------
+export const adminLogin = (req, res) => {
+    if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+        return res.status(500).json({ success: false, message: "Admin login is not configured" });
+    }
+
+    const { email, password } = req.body;
+
+    const same = (a, b) => {
+        const ha = crypto.createHash("sha256").update(String(a)).digest();
+        const hb = crypto.createHash("sha256").update(String(b)).digest();
+        return crypto.timingSafeEqual(ha, hb);
+    };
+
+    if (email && password && same(email, process.env.ADMIN_EMAIL) && same(password, process.env.ADMIN_PASSWORD)) {
+        const token = jwt.sign({ role: "admin" }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        return res.json({ success: true, token });
+    }
+
+    res.status(401).json({ success: false, message: "Invalid admin credentials" });
+};

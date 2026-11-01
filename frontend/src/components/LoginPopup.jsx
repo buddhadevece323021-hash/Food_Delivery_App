@@ -6,9 +6,13 @@ import axios from 'axios';
 import { AppContext } from '../contex/AppContext';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { EyeClosed, EyeIcon } from 'lucide-react';
 
 // 1. Component declaration accepting props
 const LoginPopup = ({ setShowLogin }) => {
+
+  const [showPassword, setShowPassword] = useState(false);
 
   // Switch between "Login" and "Sign Up"
   const [currState, setCurrState] = useState('Login');
@@ -131,28 +135,38 @@ const LoginPopup = ({ setShowLogin }) => {
                 required
               />
             </div>
-            <div className=' relative'>
+            <div className="relative">
               <img
                 src={assets.auth.lock_icon}
                 alt="lock icon"
-                className="absolute left-3 top-3 w-4 h-4 opacity-70"
+                className="absolute left-3 top-3 h-4 w-4 opacity-70"
               />
+
               <input
-                onChange={e => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-[#111111] p-3 pl-9 text-white outline-none transition placeholder:text-gray-500 focus:border-orange-500"
-                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-lg border border-white/10 bg-[#111111] p-3 pl-9 pr-10 text-white outline-none transition placeholder:text-gray-500 focus:border-orange-500"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 placeholder="Password"
                 required
               />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-4  text-gray-400 hover:text-white"
+              >
+                {showPassword ? <EyeIcon size={18} /> : <EyeClosed size={18} />}
+              </button>
             </div>
           </div>
           {/* Forgot password */}
-          <p onClick={() => {
-            navigate('/pass-reset');
-            setShowLogin(false);
-          }} className='mb-2 mt-2 text-indigo-500 cursor-pointer'> Forgot Password </p>
-
+          {currState === 'Sign Up' ? null : (
+            <p onClick={() => {
+              navigate('/pass-reset');
+              setShowLogin(false);
+            }} className='mb-2 mt-2 text-indigo-500 cursor-pointer'> Forgot Password </p>
+          )}
 
           {/* Dynamic button text based on state */}
 

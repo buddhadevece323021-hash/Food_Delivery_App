@@ -3,7 +3,7 @@ import axios from 'axios'
 import { StoreContex } from '../contex/StoreContex'
 
 const CartSuggestions = () => {
-  const { url, token, cartItems, addToCart } = useContext(StoreContex)
+  const { url, cartItems, addToCart } = useContext(StoreContex)
   const [items, setItems] = useState([])
   const [reply, setReply] = useState("")
 
@@ -13,7 +13,7 @@ const CartSuggestions = () => {
     .join(",")
 
   useEffect(() => {
-    if (!token || !cartKey) {
+    if (!cartKey) {
       setItems([])
       return
     }
@@ -25,7 +25,7 @@ const CartSuggestions = () => {
         const res = await axios.post(
           url + "/api/ai/recommend",
           { mode: "cart", cartItemIds: cartKey.split(",") },
-          { headers: { token } }
+          { withCredentials:true }
         )
 
         if (!cancelled && res.data.success) {
@@ -41,7 +41,7 @@ const CartSuggestions = () => {
       cancelled = true
       clearTimeout(timer)
     }
-  }, [cartKey, token, url])
+  }, [cartKey, url])
 
   if (items.length === 0) return null
 

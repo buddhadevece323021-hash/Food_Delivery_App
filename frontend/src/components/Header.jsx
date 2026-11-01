@@ -19,8 +19,9 @@ const Header = () => {
         </h2>
 
         <p className="max-w-xl text-sm leading-6 text-gray-200 sm:text-base sm:leading-7">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Distinctio, omnis?
+          Good food brings happiness! Whether you're craving cheesy pasta, tasty
+          noodles, fresh salads, or flavorful biryani, we've got something for
+          everyone. Pick your favorites and make every meal special.
         </p>
 
         <button className="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-600 sm:px-8">

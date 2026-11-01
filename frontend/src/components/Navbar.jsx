@@ -5,7 +5,7 @@ import { StoreContex } from "../contex/StoreContex.jsx";
 import { AppContext } from "../contex/AppContext.jsx";
 import { toast } from "react-toastify";
 import axios from 'axios';
-
+import { User, Shield } from "lucide-react";
 // Navbar component receives setShowLogin as a prop
 const navbar = ({ setShowLogin }) => {
 
@@ -16,6 +16,7 @@ const navbar = ({ setShowLogin }) => {
       const { data } = await axios.post(backendUrl + '/api/auth/logout')
       data.success && setIsLoggedin(false)
       data.success && setuserData(false)
+      toast.success(data.message);
       navigate('/')
     } catch (error) {
       toast.error(error.message);
@@ -28,20 +29,16 @@ const navbar = ({ setShowLogin }) => {
   const initials = (firstLetter + lastLetter).toUpperCase();
   // Track which menu item is currently active
   const [menu, setMenu] = useState("Home");
-  const hideMenuRoutes = [
-    "/cart",
-    "/order",
-    "/myorders"
-  ];
 
-  
-  const location = useLocation();
+
+
+  //const location = useLocation();
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  const showMenu = !hideMenuRoutes.includes(location.pathname);
+  //const showMenu = !hideMenuRoutes.includes(location.pathname);
 
-  
- 
+
+
   useEffect(() => {
     if (!isHome) {
       setSearch("");
@@ -96,7 +93,8 @@ const navbar = ({ setShowLogin }) => {
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3">
 
         {/* Logo that scrolls to Home when clicked */}
-        <Link to="/" onClick={() => scrollToSection("home", "Home")}>
+        <Link to="/" onClick={() => scrollToSection("home", "Home")}
+        >
           <img
             className="w-[100px] object-contain sm:w-[140px]"
             src={assets.logo}
@@ -104,18 +102,19 @@ const navbar = ({ setShowLogin }) => {
           />
         </Link>
 
+
         {/* Navigation menu items */}
-        <ul className="flex items-center gap-3 text-xs text-gray-200 sm:gap-8 sm:text-base">
+        {isHome && (
+          <ul className="flex items-center gap-3 text-xs text-gray-200 sm:gap-8 sm:text-base">
 
-          <li
-            onClick={() => scrollToSection("home", "Home")}
-            className={` active:scale-95 cursor-pointer rounded-xl p-2 transition-all duration-300 ease-in-out hover:scale-100  hover:text-white ${menu === "Home" ? "border-orange-500 border-b-2 text-white" : "text-orange-400"
-              }`}
-          >
-            <Link to="/">Home</Link>
-          </li>
+            <li
+              onClick={() => scrollToSection("home", "Home")}
+              className={` active:scale-95 cursor-pointer rounded-xl p-2 transition-all duration-300 ease-in-out hover:scale-100  hover:text-white ${menu === "Home" ? "border-orange-500 border-b-2 text-white" : "text-orange-400"
+                }`}
+            >
+              <Link to="/">Home</Link>
+            </li>
 
-          {showMenu && (
             <li
               onClick={() => scrollToSection("menu", "Menu")}
               className={`active:scale-95 cursor-pointer rounded-xl p-2 transition-all duration-300 ease-in-out hover:scale-100  hover:text-white ${menu === "Menu" ? "border-b-2 border-orange-500 text-white" : "text-orange-400"
@@ -123,16 +122,17 @@ const navbar = ({ setShowLogin }) => {
             >
               Menu
             </li>
-          )}
 
-          <li
-            onClick={() => scrollToSection("contact", "Contact us")}
-            className={` active:scale-95 cursor-pointer rounded-xl p-2 transition-all duration-300 ease-in-out  hover:scale-100  hover:text-white ${menu === "Contact us" ? "border-orange-500 border-b-2 text-white" : "text-orange-400"
-              }`}
-          >
-            Contact us
-          </li>
-        </ul>
+
+            <li
+              onClick={() => scrollToSection("contact", "Contact us")}
+              className={` active:scale-95 cursor-pointer rounded-xl p-2 transition-all duration-300 ease-in-out  hover:scale-100  hover:text-white ${menu === "Contact us" ? "border-orange-500 border-b-2 text-white" : "text-orange-400"
+                }`}
+            >
+              Contact us
+            </li>
+          </ul>
+        )}
 
         {/* Right-side icons and Sign-in button */}
         <div className="flex shrink-0 items-center gap-3 sm:gap-5 lg:gap-6">
@@ -182,12 +182,33 @@ const navbar = ({ setShowLogin }) => {
 
           {/* Sign-in button triggers login popup */}
           {!userData ? (
-            <button
-              onClick={() => setShowLogin(true)}
-              className="rounded-full border border-orange-500 px-3 py-2 text-xs text-white transition hover:bg-orange-600 sm:px-6 sm:text-sm"
-            >
-              Sign in
-            </button>
+            <div className="group relative cursor-pointer">
+              <button
+                className="rounded-full border border-orange-500 px-3 py-2 text-xs text-white transition hover:bg-orange-600 sm:px-6 sm:text-sm"
+              >
+                Sign In
+              </button>
+
+              <ul className="absolute right-0 top-full z-50 hidden min-w-40 flex-col gap-3 rounded-xl border border-white/10 bg-[#1c1c1c] p-3 text-sm text-gray-300 shadow-xl shadow-black/30 group-hover:flex">
+
+                <li
+                  onClick={() => setShowLogin(true)}
+                  className="flex items-center gap-2 whitespace-nowrap transition-colors duration-200 hover:text-orange-500"
+                >
+                  <User size={18} />
+                  User Login
+                </li>
+                <hr className="border-white/10" />
+                <li
+                  onClick={() => window.location.href = "http://localhost:5174"}
+                  className="flex items-center gap-2 whitespace-nowrap transition-colors duration-200 hover:text-orange-500"
+                >
+                  <Shield size={18} />
+                  Admin Login
+                </li>
+
+              </ul>
+            </div>
           ) : (
             <div className="group relative cursor-pointer border-2 border-orange-500 shadow-lg rounded-full p-2">
 
