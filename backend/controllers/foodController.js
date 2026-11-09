@@ -24,7 +24,6 @@ const addFood = async (req, res) => {
         res.json({
             success: true,
             message: "Food Added..",
-            imageUrl: `http://localhost:3001/images/${image_filename}`
         });
 
 

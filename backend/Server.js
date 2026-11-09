@@ -17,7 +17,7 @@ import { fileURLToPath } from "url";
 configDotenv();
 
 // frontend URL...
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174']
+const allowedOrigins = ["https://your-frontend.vercel.app",'http://localhost:5173', 'http://localhost:5174']
 
 // app configaretion...
 const app = express();
