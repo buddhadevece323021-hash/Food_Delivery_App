@@ -10,38 +10,40 @@ import { cartRouter } from "./routes/cartRoute.js";
 import { orderRouter } from "./routes/orderRoute.js";
 import userRouter from "./routes/userRoute.js";
 import { aiRouter } from "./routes/aiRoute.js";
-import path from "path";
-import { fileURLToPath } from "url";
+
 
 
 configDotenv();
 
 // frontend URL...
-const allowedOrigins = ["https://your-frontend.vercel.app",'http://localhost:5173', 'http://localhost:5174']
+const allowedOrigins = ["https://your-frontend.vercel.app",'http://localhost:5173', 'http://localhost:5174', "https://your-admin.vercel.app"]
 
 // app configaretion...
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//const __filename = fileURLToPath(import.meta.url);
+//const __dirname = path.dirname(__filename);
 
 const port = process.env.PORT || 2000;
+
+app.set("trust proxy", 1); // Render sits behind a proxy
+
 
 // middleware....
 app.use(express.json());
 app.use(cookieParser());
 
 // allow cookies/authorization headers..
-app.use(cors({origin:allowedOrigins, credentials: true }));
+app.use(cors({origin:allowedOrigins, credentials: true, allowedHeaders: ["Content-Type", "token"], }));
 
 // DB connection...
 connectDB();
 
 // api end point...
 app.use("/api/food", foodRouter);
-app.use(
+/*app.use(
   "/images",
   express.static(path.join(__dirname, "uploads"))
-);
+);*/
 app.use("/api/user", userRouter);
 app.use('/api/auth', authRouter);
 app.use("/api/cart",cartRouter);
@@ -55,7 +57,7 @@ app.get("/", (req, res) => {
 
 // app run on the server..
 app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 
 })
 

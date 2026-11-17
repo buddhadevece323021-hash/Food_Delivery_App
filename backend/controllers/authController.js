@@ -78,7 +78,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.json({ success: false, message: 'Email and password are required' });
+       return res.json({ success: false, message: 'Email and password are required' });
     }
     try {
 
@@ -122,7 +122,7 @@ export const logout = async (req, res) => {
         return res.json({ success: true, message: 'Logged Out successfully' })
 
     } catch (error) {
-        return res.json({ success: true, message: error.message });
+        return res.json({ success: false, message: error.message });
     }
 }
 
@@ -134,7 +134,7 @@ export const sendVerifyOtp = async (req, res) => {
         const user = await userModel.findById(userId);
 
         if (user.isaccountVerified) {
-            res.json({ success: false, message: "Account already verified" })
+           return res.json({ success: false, message: "Account already verified" })
         }
 
         const otp = String(Math.floor(100000 + Math.random() * 900000));
