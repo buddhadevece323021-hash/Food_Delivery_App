@@ -10,18 +10,20 @@ import { User, Shield } from "lucide-react";
 const navbar = ({ setShowLogin }) => {
 
   const { userData, backendUrl, setuserData, setIsLoggedin } = useContext(AppContext);
-  const logout = async () => {
-    try {
-      axios.defaults.withCredentials = true;
-      const { data } = await axios.post(backendUrl + '/api/auth/logout')
-      data.success && setIsLoggedin(false)
-      data.success && setuserData(false)
-      toast.success(data.message);
-      navigate('/')
-    } catch (error) {
-      toast.error(error.message);
+ const logout = async () => {
+  try {
+    axios.defaults.withCredentials = true;
+    const { data } = await axios.post(backendUrl + '/api/auth/logout');
+    if (data.success) {
+      setIsLoggedin(false);
+      setuserData(false);
+      navigate('/');
     }
+    toast[data.success ? "success" : "error"](data.message);
+  } catch (error) {
+    toast.error(error.message);
   }
+};
 
   const nameParts = userData?.name?.split(" ") || [];
   const firstLetter = nameParts[0]?.[0] || '';
@@ -200,7 +202,7 @@ const navbar = ({ setShowLogin }) => {
                 </li>
                 <hr className="border-white/10" />
                 <li
-                  onClick={() => window.location.href = "http://localhost:5174"}
+                  onClick={() => window.location.href = import.meta.env.VITE_ADMIN_URL}
                   className="flex items-center gap-2 whitespace-nowrap transition-colors duration-200 hover:text-orange-500"
                 >
                   <Shield size={18} />

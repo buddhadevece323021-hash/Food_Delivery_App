@@ -32,7 +32,7 @@ const Login = ({ url, setToken, }) => {
     }
   };
 
- 
+
 
   return (
     <div className="  flex min-h-screen items-center justify-center bg-[#111111] px-4">
@@ -40,23 +40,22 @@ const Login = ({ url, setToken, }) => {
         onSubmit={onSubmit}
         className=" animate-fade-up w-full max-w-sm rounded-2xl border border-white/10 bg-[#1c1c1c] p-6 shadow-2xl sm:p-8"
       >
-        
-        
+
+
         <div className=" flex items-center justify-between">
-         <p className="text-sm font-medium uppercase tracking-[0.2em] text-orange-500">
-          Admin
-        </p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-orange-500">
+            Admin
+          </p>
 
           {/* Close modal button - updates parent state to false */}
           <button
             type="button"
-            onClick={() => window.location.href = "http://localhost:5173"}
-            className="rounded-full p-2 transition hover:bg-white/10"
+            onClick={() => window.location.href = import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173"} className="rounded-full p-2 transition hover:bg-white/10"
           >
             <img className="w-4" src={assets.cross_icon} alt="Close" />
           </button>
         </div>
-        <h2 className="text-2xl mb-7 font-bold text-white">Sign up</h2>
+        <h2 className="text-2xl mb-7 font-bold text-white">Login</h2>
 
 
         <div className="flex flex-col gap-4">
@@ -95,7 +94,7 @@ const Login = ({ url, setToken, }) => {
           <button
             type="submit"
             disabled={loading}
-             className=" shadow-lg border-solid
+            className=" shadow-lg border-solid
             border-2
              border-orange-900 transition-all mt-6 w-full rounded-lg
             bg-gradient-to-bl from-orange-800 to-black/20  p-3 font-semibold text-white hover:bg-gradient-to-br hover:from-orange-700 hover:to-black/20"
