@@ -16,8 +16,8 @@ import { aiRouter } from "./routes/aiRoute.js";
 configDotenv();
 
 // frontend URL...
-const allowedOrigins = ["process.env.FRONTEND_URL",
-  "process.env.ADMIN_URL",'http://localhost:5173', 'http://localhost:5174',].filter(Boolean);
+const allowedOrigins = ["https://food-delivery-app-chi-steel.vercel.app",
+  "https://food-delivery-app-6ulb.vercel.app",'http://localhost:5173', 'http://localhost:5174',].filter(Boolean);
 
 // app configaretion...
 const app = express();
