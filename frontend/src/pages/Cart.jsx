@@ -50,7 +50,7 @@ const Cart = () => {
                   <div className="flex items-center gap-3">
                     <img
                       className="h-12 w-12 shrink-0 rounded-xl object-cover"
-                      src={url + "/images/" + item.image}
+                      src={item.image}
                       alt={item.name}
                     />
                     <p className="font-medium text-white">{item.name}</p>

@@ -75,7 +75,7 @@ const CartSuggestions = () => {
             className="flex min-w-0 items-center gap-3 rounded-xl border border-white/10 bg-[#111111] p-3 transition-colors duration-200 hover:border-orange-500/40"
           >
             <img
-              src={url + "/images/" + item.image}
+              src={item.image}
               alt={item.name}
               className="h-16 w-16 shrink-0 rounded-xl object-cover"
             />

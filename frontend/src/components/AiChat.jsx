@@ -221,7 +221,7 @@ const AiChat = () => {
                     className="mt-3 flex items-center gap-3 rounded-xl border border-white/10 bg-[#222222] p-3"
                   >
                     <img
-                      src={url + "/images/" + item.image}
+                      src={item.image}
                       alt={item.name}
                       className="h-14 w-14 rounded-lg object-cover"
                     />
