@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const AppContext = createContext()
 
 export const AppContextProvider = (props) => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+   const backendUrl = import.meta.env.VITE_API_URL;
     const [isLoggedin, setIsLoggedin] = useState(false)
     const [userData, setuserData] = useState(false)
 
@@ -32,7 +32,7 @@ export const AppContextProvider = (props) => {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error(error.message);
+           setIsLoggedin(false);
         }
     };
 
