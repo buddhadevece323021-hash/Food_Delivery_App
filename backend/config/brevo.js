@@ -1,4 +1,8 @@
 export const sendBrevoEmail = async ({ to, subject, htmlContent }) => {
+  if (!process.env.BREVO_API_KEY || !process.env.SENDER_EMAIL) {
+    throw new Error("BREVO_API_KEY or SENDER_EMAIL is not set");
+  }
+
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -17,12 +21,12 @@ export const sendBrevoEmail = async ({ to, subject, htmlContent }) => {
     }),
   });
 
-  const data = await response.json();
+  // Brevo may return an empty body on some errors, so don't assume JSON
+  const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(data.message || "Brevo email sending failed");
+    throw new Error(data.message || `Brevo error ${response.status}`);
   }
 
   return data;
 };
-

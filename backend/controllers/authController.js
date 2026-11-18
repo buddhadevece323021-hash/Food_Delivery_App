@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import validator from "validator";
 import crypto from "crypto";
-import { transporter } from "../config/nodemailer.js";
 import { sendBrevoEmail } from "../config/brevo.js";
 
 
@@ -67,7 +66,7 @@ export const register = async (req, res) => {
         <p>Thank you for joining FoodBite!</p>
     `
         };
-        await sendBrevoEmail(mailoption);
+         sendBrevoEmail(mailoption);
 
         return res.json({
             success: true,
@@ -135,7 +134,7 @@ export const logout = async (req, res) => {
 
 //--- send verification OTP to the user's email ---//
 
-export const sendVerifyOtp = async (req, res) => {
+/*export const sendVerifyOtp = async (req, res) => {
     try {
         const { userId } = req.user;
         const user = await userModel.findById(userId);
@@ -168,7 +167,7 @@ export const sendVerifyOtp = async (req, res) => {
         return res.json({ success: false, message: error.message });
 
     }
-}
+}*/
 
 //--- Verifiy the email using OTP ---//
 
@@ -243,8 +242,11 @@ export const sendResetOtp = async (req, res) => {
             subject: 'Password Reset OTP',
             text: `Your OTP is ${otp}. Reset your password using this OTP.`
         }
-        await transporter.sendMail(mailoption);
-
+        await sendBrevoEmail({
+            to: user.email,
+            subject: "Password Reset OTP",
+            htmlContent: `<p>Your OTP is <strong>${otp}</strong>. It expires in 15 minutes.</p>`
+        });
         return res.json({
             success: true,
             message: " OTP sent on Email"
