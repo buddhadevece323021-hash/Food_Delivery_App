@@ -11,7 +11,7 @@ const FoodItems = ({ id, name, price, description, image }) => {
       <div className="relative overflow-hidden">
         <img
           className="food-image transition duration-500 hover:scale-[1.03]"
-          src={url+"/images/"+image}
+          src={image}
           alt={name}
         />
 
