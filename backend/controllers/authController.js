@@ -236,12 +236,6 @@ export const sendResetOtp = async (req, res) => {
 
         await user.save();
 
-        const mailoption = {
-            from: process.env.SENDER_EMAIL,
-            to: user.email,
-            subject: 'Password Reset OTP',
-            text: `Your OTP is ${otp}. Reset your password using this OTP.`
-        }
         await sendBrevoEmail({
             to: user.email,
             subject: "Password Reset OTP",
